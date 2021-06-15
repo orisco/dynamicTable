@@ -3,9 +3,7 @@ import TextInput from "../textInput/textInput.component";
 
 import "./form.styles.scss";
 
-const Form = ({ setUserInfo }) => {
-  const date = new Date();
-
+const Form = ({ userInfo, setUserInfo }) => {
   const updateForm = (e) => {
     const { name, value } = e.target;
     setUserInfo((info) => ({
@@ -16,21 +14,30 @@ const Form = ({ setUserInfo }) => {
 
   return (
     <div className="form">
-      <TextInput
-        type="text"
-        name="name"
-        className="name"
-        placeholder="Creator Name"
-        operation={updateForm}
-      />
-      <TextInput type="text" className="date" value={date} readOnly />
-      <TextInput
-        type="text"
-        name="comment"
-        className="comment"
-        placeholder="Comment"
-        operation={updateForm}
-      />
+      <div className="field">
+        <TextInput
+          type="text"
+          name="name"
+          placeholder="Creator Name"
+          operation={updateForm}
+        />
+      </div>
+      <div className="field">
+        <TextInput
+          type="text"
+          value={userInfo.date.toString().slice(0, 15)}
+          readOnly
+        />
+      </div>
+      <div className="largeField">
+        <TextInput
+          type="textarea"
+          name="comment"
+          className="comment"
+          placeholder="Comments"
+          operation={updateForm}
+        />
+      </div>
     </div>
   );
 };

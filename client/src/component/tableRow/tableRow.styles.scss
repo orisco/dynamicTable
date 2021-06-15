@@ -1,16 +1,12 @@
+@import "../../App.scss";
+
 .row {
-  display: flex;
-  // width: 100vw;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  @include flex(center, row);
   .column {
     width: 10vw;
     height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgb(241, 241, 241);
+    @include flex(center, row);
+    border: $border;
     padding: 5px;
   }
   .cell {

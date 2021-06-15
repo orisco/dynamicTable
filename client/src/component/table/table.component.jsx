@@ -13,6 +13,7 @@ const Table = ({ setTable, table }) => {
           <TableRow
             key={rowNumber}
             setCounter={setCounter}
+            counter={counter}
             rowNumber={rowNumber}
             setTable={setTable}
             table={table}

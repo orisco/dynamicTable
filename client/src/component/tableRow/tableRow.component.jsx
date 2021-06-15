@@ -6,7 +6,11 @@ import CustomButton from "../customButton/customButton.component";
 import "./tableRow.styles.scss";
 
 const TableRow = ({ setCounter, rowNumber, setTable, table }) => {
-  const [row, setRow] = useState({ number: rowNumber, price: 0, quantity: 0 });
+  const [row, setRow] = useState({
+    number: rowNumber,
+    price: 0,
+    quantity: 0,
+  });
   const [addRowButton, setAddRowButton] = useState(false);
   const [saveChanges, setSaveChanges] = useState(false);
 
@@ -19,8 +23,6 @@ const TableRow = ({ setCounter, rowNumber, setTable, table }) => {
           const newTable = [...table];
           newTable.splice(i, 1, row);
           setTable(newTable);
-        } else {
-          setTable((table) => [...table, { ...row }]);
         }
       });
     }
@@ -28,10 +30,12 @@ const TableRow = ({ setCounter, rowNumber, setTable, table }) => {
   };
 
   const addRow = () => {
-    setTable((table) => [...table, { ...row }]);
     setCounter((counter) => [...counter, counter.length]);
     setAddRowButton(true);
     setSaveChanges(false);
+    if (rowNumber != 1) {
+      setTable((table) => [...table, { ...row }]);
+    }
   };
 
   const handleChange = (e) => {
@@ -46,12 +50,12 @@ const TableRow = ({ setCounter, rowNumber, setTable, table }) => {
   return (
     <div className="row">
       <div className="column">
-        <h2>{rowNumber === 0 ? "Number" : rowNumber}</h2>
+        <h2>{rowNumber === 0 ? "#" : rowNumber}</h2>
       </div>
 
       <div className="column">
         {rowNumber === 0 ? (
-          <h2>Price ($USD)</h2>
+          <h2>Price ($)</h2>
         ) : (
           <TextInput
             type="number"
@@ -78,18 +82,19 @@ const TableRow = ({ setCounter, rowNumber, setTable, table }) => {
 
       <div className="column">
         {rowNumber === 0 ? (
-          <h2>Total Price</h2>
+          <h2>Total Price ($)</h2>
         ) : (
-          <TextInput value={row.quantity * row.price} readOnly />
+          <TextInput value={row.price * row.quantity} readOnly />
         )}
       </div>
 
       <div className="column">
-        {saveChanges && rowNumber != 0 ? (
-          <CustomButton operation={saveRow} className="btn fas fa-save" />
+        {(!addRowButton && saveChanges && rowNumber !== 0) ||
+        (addRowButton && saveChanges && rowNumber !== 0) ? (
+          <CustomButton operation={saveRow} className="btn fas fa-save fa-lg" />
         ) : null}
-        {!addRowButton && rowNumber != 0 ? (
-          <CustomButton operation={addRow} className="btn fas fa-plus" />
+        {!saveChanges && !addRowButton && rowNumber !== 0 ? (
+          <CustomButton operation={addRow} className="btn fas fa-plus fa-lg" />
         ) : null}
       </div>
     </div>

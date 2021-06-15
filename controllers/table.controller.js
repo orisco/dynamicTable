@@ -1,19 +1,19 @@
 const { Table } = require("../models/table.model.js");
 
 exports.addTable = (req, res) => {
-  const table = new Table(req.body);
-  // const calculate = table.calculateSum();
-  // console.log(calculate);
-  table.save((err, newTable) => {
-    if (err) {
-      res.status(500).send({
-        message: err,
-      });
-      return;
-    }
+  try {
+    const table = new Table(req.body);
+    table.save((error, newTable) => {
+      if (error) {
+        res.status(500).send({
+          message: error,
+        });
+        return;
+      }
 
-    res.send({ message: "Table was added successfully" });
-  });
+      res.send({ message: "Table was added successfully" });
+    });
+  } catch (error) {
+    res.send({ msg: error });
+  }
 };
-
-// get table by user

@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 
 const tableSchema = new mongoose.Schema({
-  creatorName: String,
-  date: {
-    type: Date,
-    default: Date.now,
+  creatorName: {
+    type: String,
+    required: [true, "please type your name"],
   },
+  date: Date,
   comments: String,
   table: [
     {
       number: Number,
-      price: Number,
-      quantity: Number,
+      price: { type: Number, require: [true, "type product's price"] },
+      quantity: { type: Number, default: 1 },
       sum: Number,
     },
   ],

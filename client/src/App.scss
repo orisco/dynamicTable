@@ -1,12 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap");
 
+@mixin flex($justify, $direction) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: center;
+}
+
+$border: 1px solid rgb(241, 241, 241);
+
 * {
   margin: 0;
   padding: 0;
   font-family: "Roboto", sans-serif;
 }
-
-// .App {
-//   width: 100vw;
-//   height: 100vh;
-// }

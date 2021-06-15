@@ -8,44 +8,68 @@ import CustomButton from "../component/customButton/customButton.component";
 import "./homepage.styles.scss";
 
 const HomePage = () => {
-  const [userInfo, setUserInfo] = useState({ name: "", comments: "" });
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    comments: "",
+    date: new Date(),
+  });
   const [table, setTable] = useState([]);
   const [listSent, setListSent] = useState(false);
+  const [error, setError] = useState(false);
 
   const sendListToApi = () => {
+    if (table.length === 0 || userInfo.name === "") {
+      setError(userInfo);
+      return;
+    }
     let body = {
       creatorName: userInfo.name,
       comments: userInfo.comments,
       table,
     };
-    console.log(body);
     axios
       .post("http://localhost:1400/api/add-table", body)
       .then(() => {
         setListSent(true);
         setTable([]);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.message));
   };
 
   return (
     <div className="homepage">
       {listSent ? (
-        <div className="formWrapper">
-          <h1>thank you for sending the list</h1>
-          <h2 onClick={() => setListSent(false)}>start a new list</h2>
+        <div className="wrapper">
+          <div className="header">
+            <h1>Thank you for sending the list</h1>
+            <h2 onClick={() => setListSent(false)} className="btn">
+              Start a new list
+            </h2>
+          </div>
         </div>
       ) : (
         <>
-          <div className="formWrapper">
-            <h1>Order Form</h1>
-            <Form setUserInfo={setUserInfo} />
-          </div>
-          <div className="table">
-            <Table table={table} setTable={setTable} />
-          </div>
-          <div className="footer">
-            <CustomButton operation={sendListToApi}>Send List</CustomButton>
+          <div className="wrapper">
+            <div className="header">
+              <h1>Order Form</h1>
+              <Form setUserInfo={setUserInfo} userInfo={userInfo} />
+            </div>
+
+            <div className="body">
+              <Table table={table} setTable={setTable} />
+            </div>
+
+            <div className="footer">
+              <CustomButton
+                operation={sendListToApi}
+                className={"btn fas fa-paper-plane fa-3x"}
+              ></CustomButton>
+            </div>
+            {error ? (
+              <div className="error">
+                <h2>Please fill in all the details</h2>
+              </div>
+            ) : null}
           </div>
         </>
       )}

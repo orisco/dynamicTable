@@ -1,9 +1,20 @@
+@import "../../App.scss";
+
 .form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 80vw;
+  @include flex(center, row);
   flex-wrap: wrap;
-  //  {
-  //   width: 50%;
-  // }
+  .field,
+  .largeField {
+    @include flex(center, row);
+    height: 50px;
+    margin: 5px;
+    border: $border;
+  }
+  .largeField {
+    width: 600px;
+  }
+  .field {
+    width: 400px;
+  }
 }
