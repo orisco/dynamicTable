@@ -3,7 +3,11 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("./db/mongoose");
 
-app.use(cors());
+let corsOptions = {
+  origin: ["http://localhost:3000"],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // routes

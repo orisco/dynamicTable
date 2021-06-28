@@ -1,20 +1,7 @@
 @import "../../App.scss";
 
-.form {
-  width: 80vw;
+form {
+  width: 60vw;
   @include flex(center, row);
   flex-wrap: wrap;
-  .field,
-  .largeField {
-    @include flex(center, row);
-    height: 50px;
-    margin: 5px;
-    border: $border;
-  }
-  .largeField {
-    width: 600px;
-  }
-  .field {
-    width: 400px;
-  }
 }
